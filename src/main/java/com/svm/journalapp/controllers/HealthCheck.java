@@ -1,4 +1,4 @@
-package com.svm.controllers;
+package com.svm.journalapp.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
