@@ -1,5 +1,6 @@
 package com.svm.journalapp.entities;
 
+import com.svm.journalapp.enums.Sentiment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -26,6 +27,7 @@ public class JournalEntry {
 
     private String content;
     private LocalDate date;
+    private Sentiment sentiment;
 }
 
 //    public ObjectId getId() {

@@ -1,7 +1,10 @@
 package com.svm.journalapp.controllers;
 
+import com.svm.journalapp.api.response.WeatherResponse;
+import com.svm.journalapp.cache.AppCache;
 import com.svm.journalapp.entities.User;
 import com.svm.journalapp.services.UserService;
+import com.svm.journalapp.services.WeatherService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,21 +25,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/all-users")
-    public ResponseEntity<?> getAllUsers(){
-        List<User> allUsers = userService.getAllUsers();
-        if(allUsers != null && !allUsers.equals("")){
-            return new ResponseEntity<>(allUsers, HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    @Autowired
+    private WeatherService weatherService;
 
     @GetMapping
-    public User getUserByUsername(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        return userService.findUserByUsername(username);
+    public ResponseEntity<?> getUserByUsername(){
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            WeatherResponse response = weatherService.getWeatherDetails("Mumbai");
+
+            String weatherString = "";
+            if(response != null && response.getCurrent() != null) {
+                weatherString = ", weather feels like " + response.getCurrent().getFeelsLike();
+            }
+            return new ResponseEntity<>("Hi " + username + weatherString, HttpStatus.OK);
+
+       } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @PutMapping

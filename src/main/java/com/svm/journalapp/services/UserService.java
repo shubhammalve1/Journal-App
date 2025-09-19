@@ -28,9 +28,8 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList("USER"));
             userRepository.save(user);
-            logger.debug("Trying to add Same Entry for {}: ", user.getUsername());
         } catch(Exception e){
-            //logger.debug("Trying to add Same Entry for {}: ", user.getUsername());
+            logger.debug("Trying to add Same Entry for {}: ", user.getUsername());
         }
     }
 

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserDetailsServiceImplementation implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
