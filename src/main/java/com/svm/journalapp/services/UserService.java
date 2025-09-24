@@ -1,5 +1,6 @@
 package com.svm.journalapp.services;
 
+import com.svm.journalapp.dto.UserDTO;
 import com.svm.journalapp.entities.User;
 import com.svm.journalapp.repository.UserRepository;
 import org.slf4j.Logger;

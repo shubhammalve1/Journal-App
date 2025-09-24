@@ -23,11 +23,10 @@ public class RedisService {
                 return null;
             }
 
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(o.toString(), entityClass);
+            return entityClass.cast(o);
 
         } catch (Exception e){
-            log.error("Exception ", e);
+            log.error("Error while getting key {} from Redis ", key, e);
             return null;
         }
     }
@@ -35,11 +34,9 @@ public class RedisService {
     //ttl: time to leave
     public void set(String key, Object o, Long ttl){
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonValue = mapper.writeValueAsString(o);
-            redisTemplate.opsForValue().set(key, jsonValue, ttl, TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set(key, o, ttl, TimeUnit.SECONDS);
         } catch (Exception e){
-            log.error("Exception " , e);
+            log.error("Error while setting key {} in Redis ", key, e);
         }
     }
 }
